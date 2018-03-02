@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ConfDialog} from '../index';
+import { ConfDialog } from '../index';
 import {
   FormGroup, ControlLabel, FormControl, HelpBlock,
   Checkbox, Button, Alert

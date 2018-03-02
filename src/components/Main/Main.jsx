@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Register, SignIn, ConfDialog } from '../index'
+import { Register, SignIn, ConfDialog, ConversationOverview } from '../index'
 import { Route, Switch } from 'react-router-dom';
 import { Navbar, Nav, NavItem, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -48,7 +48,7 @@ class Main extends Component {
                                   Register
                                </NavItem>
                              </LinkContainer>,
-                             ]
+                            ]
                          }
                       </Nav>
                       {this.signedIn() ?
@@ -69,8 +69,8 @@ class Main extends Component {
                <Route path='/signin' render={() => <SignIn {...this.props} />}/>
                <Route path='/register'
                 render={() => <Register {...this.props} />} />
-               {/* <Route path='/cnvs' render={() => <ConversationOverview 
-                {...this.props} />}/> */}
+               <Route path='/cnvs' render={() => <ConversationOverview 
+                {...this.props} />}/>
            </Switch>
 
            {/*Error popup dialog*/}
