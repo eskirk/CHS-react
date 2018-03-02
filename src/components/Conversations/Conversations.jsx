@@ -16,11 +16,16 @@ class ConversationOverview extends Component {
       return newState;
    }
 
+   displayConversations() {
+      let cnvs = this.props.getCnvs();
+      console.log('CNVS: ' + cnvs);
+   }
+ 
    render() {
       return (
          <div className="container">
             <span>
-               ConversationOverview
+               Conversations
             </span>
          </div>
       )

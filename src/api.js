@@ -5,8 +5,8 @@ var cookie;
 headers.set('Content-Type', 'application/json');
 
 const reqConf = {
-    headers: headers,
-    credentials: 'include',
+   headers: headers,
+   credentials: 'include',
 };
 
 // Helper functions for the comon request types
@@ -19,11 +19,11 @@ const reqConf = {
  */
 export function post(endpoint, body) {
    console.log("BASE URL: " + baseURL + endpoint);
-    return fetch(baseURL + endpoint, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        ...reqConf
-    });
+   return fetch(baseURL + endpoint, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      ...reqConf
+   });
 }
 
 /**
@@ -33,11 +33,11 @@ export function post(endpoint, body) {
  * @returns {Promise}
  */
 export function put(endpoint, body) {
-    return fetch(baseURL + endpoint, {
-        method: 'PUT',
-        body: JSON.stringify(body),
-        ...reqConf
-    })
+   return fetch(baseURL + endpoint, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+      ...reqConf
+   })
 }
 
 /**
@@ -46,17 +46,17 @@ export function put(endpoint, body) {
  * @returns {Promise}
  */
 export function get(endpoint) {
-    return fetch(baseURL + endpoint, {
-        method: 'GET',
-        ...reqConf
-    })
+   return fetch(baseURL + endpoint, {
+      method: 'GET',
+      ...reqConf
+   })
 }
 
 export function del(endpoint) {
-    return fetch(baseURL + endpoint, {
-        method: 'DELETE',
-        ...reqConf
-    })
+   return fetch(baseURL + endpoint, {
+      method: 'DELETE',
+      ...reqConf
+   })
 }
 
 // Functions for performing the api requests
@@ -75,8 +75,7 @@ export function signIn(cred) {
             cookie = location[location.length - 1];
             console.log("Got session " + cookie);
             return get("Ssns/" + cookie)
-         }
-         else
+         } else
             return createErrorPromise(response);
       })
       .then(response => response.json())
@@ -90,9 +89,9 @@ export function signIn(cred) {
 function createErrorPromise(response) {
    if (response.status === 400)
       return Promise.resolve(response)
-      .then(response => response.json())
-      .then(errorList => Promise.reject(errorList.map(
-         err => errorTranslate(err.tag))));
+         .then(response => response.json())
+         .then(errorList => Promise.reject(errorList.map(
+            err => errorTranslate(err.tag))));
    else
       return Promise.reject(["Unknown error"]);
 }
@@ -101,7 +100,7 @@ function createErrorPromise(response) {
  * @returns {Promise} result of the sign out request
  */
 export function signOut() {
-    return del("Ssns/" + cookie);
+   return del("Ssns/" + cookie);
 }
 
 /**
@@ -110,77 +109,77 @@ export function signOut() {
  * @returns {Promise}
  */
 export function register(user) {
-    return post("Prss", user)
-    .then(res => {
-       return res.ok ? null : createErrorPromise(res);
-   })
+   return post("Prss", user)
+      .then(res => {
+         return res.ok ? null : createErrorPromise(res);
+      })
 }
 
 /**
  * @returns {Promise} json parsed data
  */
 export function getCnvs() {
-    return get("Cnvs").then((res) => res.json())
+   return get("Cnvs").then((res) => res.json())
 }
 
 export function putCnv(id, body) {
-    return put(`Cnvs/${id}`, body)
+   return put(`Cnvs/${id}`, body)
 }
 
 export function delCnv(id) {
-    return del(`Cnvs/${id}`)
+   return del(`Cnvs/${id}`)
 }
 
 export function postCnv(body) {
-    return post('Cnvs', body)
+   return post('Cnvs', body)
 }
 
 const errMap = {
-    en: {
-        missingField: 'Field missing from request: ',
-        badValue: 'Field has bad value: ',
-        notFound: 'Entity not present in DB',
-        badLogin: 'Email/password combination invalid',
-        dupEmail: 'Email duplicates an existing email',
-        noTerms: 'Acceptance of terms is required',
-        forbiddenRole: 'Role specified is not permitted.',
-        noOldPwd: 'Change of password requires an old password',
-        oldPwdMismatch: 'Old password that was provided is incorrect.',
-        dupTitle: 'Conversation title duplicates an existing one',
-        dupEnrollment: 'Duplicate enrollment',
-        forbiddenField: 'Field in body not allowed.',
-        queryFailed: 'Query failed (server problem).'
-    },
-    es: {
-        missingField: '[ES] Field missing from request: ',
-        badValue: '[ES] Field has bad value: ',
-        notFound: '[ES] Entity not present in DB',
-        badLogin: '[ES] Email/password combination invalid',
-        dupEmail: '[ES] Email duplicates an existing email',
-        noTerms: '[ES] Acceptance of terms is required',
-        forbiddenRole: '[ES] Role specified is not permitted.',
-        noOldPwd: '[ES] Change of password requires an old password',
-        oldPwdMismatch: '[ES] Old password that was provided is incorrect.',
-        dupTitle: '[ES] Conversation title duplicates an existing one',
-        dupEnrollment: '[ES] Duplicate enrollment',
-        forbiddenField: '[ES] Field in body not allowed.',
-        queryFailed: '[ES] Query failed (server problem).'
-    },
-    swe: {
-        missingField: 'Ett fält saknas: ',
-        badValue: 'Fält har dåligt värde: ',
-        notFound: 'Entitet saknas i DB',
-        badLogin: 'Email/lösenord kombination ogilltig',
-        dupEmail: 'Email duplicerar en existerande email',
-        noTerms: 'Villkoren måste accepteras',
-        forbiddenRole: 'Angiven roll förjuden',
-        noOldPwd: 'Tidiagre lösenord krav för att updatera lösenordet',
-        oldPwdMismatch: 'Tidigare lösenord felaktigt',
-        dupTitle: 'Konversationstitel duplicerar tidigare existerande titel',
-        dupEnrollment: 'Duplicerad inskrivning',
-        forbiddenField: 'Förbjudet fält i meddelandekroppen',
-        queryFailed: 'Förfrågan misslyckades (server problem).'
-    }
+   en: {
+      missingField: 'Field missing from request: ',
+      badValue: 'Field has bad value: ',
+      notFound: 'Entity not present in DB',
+      badLogin: 'Email/password combination invalid',
+      dupEmail: 'Email duplicates an existing email',
+      noTerms: 'Acceptance of terms is required',
+      forbiddenRole: 'Role specified is not permitted.',
+      noOldPwd: 'Change of password requires an old password',
+      oldPwdMismatch: 'Old password that was provided is incorrect.',
+      dupTitle: 'Conversation title duplicates an existing one',
+      dupEnrollment: 'Duplicate enrollment',
+      forbiddenField: 'Field in body not allowed.',
+      queryFailed: 'Query failed (server problem).'
+   },
+   es: {
+      missingField: '[ES] Field missing from request: ',
+      badValue: '[ES] Field has bad value: ',
+      notFound: '[ES] Entity not present in DB',
+      badLogin: '[ES] Email/password combination invalid',
+      dupEmail: '[ES] Email duplicates an existing email',
+      noTerms: '[ES] Acceptance of terms is required',
+      forbiddenRole: '[ES] Role specified is not permitted.',
+      noOldPwd: '[ES] Change of password requires an old password',
+      oldPwdMismatch: '[ES] Old password that was provided is incorrect.',
+      dupTitle: '[ES] Conversation title duplicates an existing one',
+      dupEnrollment: '[ES] Duplicate enrollment',
+      forbiddenField: '[ES] Field in body not allowed.',
+      queryFailed: '[ES] Query failed (server problem).'
+   },
+   swe: {
+      missingField: 'Ett fält saknas: ',
+      badValue: 'Fält har dåligt värde: ',
+      notFound: 'Entitet saknas i DB',
+      badLogin: 'Email/lösenord kombination ogilltig',
+      dupEmail: 'Email duplicerar en existerande email',
+      noTerms: 'Villkoren måste accepteras',
+      forbiddenRole: 'Angiven roll förjuden',
+      noOldPwd: 'Tidiagre lösenord krav för att updatera lösenordet',
+      oldPwdMismatch: 'Tidigare lösenord felaktigt',
+      dupTitle: 'Konversationstitel duplicerar tidigare existerande titel',
+      dupEnrollment: 'Duplicerad inskrivning',
+      forbiddenField: 'Förbjudet fält i meddelandekroppen',
+      queryFailed: 'Förfrågan misslyckades (server problem).'
+   }
 }
 
 /**
@@ -191,5 +190,5 @@ const errMap = {
  * @param {string} lang
  */
 export function errorTranslate(errTag, lang = 'en') {
-    return errMap[lang][errTag] || 'Unknown Error!';
+   return errMap[lang][errTag] || 'Unknown Error!';
 }

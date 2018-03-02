@@ -1,5 +1,6 @@
 import * as api from '../api';
 
+// Prss functions
 export function signIn(credentials, cb) {
    console.log("signIn action creator");
    return (dispatch, prevState) => {
@@ -39,6 +40,7 @@ export function signOut(cb) {
    };
 }
 
+// Error functions
 export function postError(type, details, cb) {
    return (dispatch, prevState) => {
       dispatch({type, details});
@@ -53,4 +55,18 @@ export function clearErrors(cb) {
       if (cb)
          cb();
    };
+}
+
+// Cnvs functions
+export function getCnvs(cb) {
+   console.log('getting conversations');
+   return (dispatch, prevState) => {
+      api.getCnvs()
+         .then(() => dispatch({type: "GET_CNVS"}))
+         .then(() => {if (cb) cb();})
+         .catch((err) => {
+            console.log('Could not get conversations');
+            dispatch({type: "ERROR", err});
+         });
+   }
 }

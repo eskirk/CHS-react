@@ -3,7 +3,8 @@ import { combineReducers } from 'redux';
 
 import Prss from './Prss';
 import Errs from './Errs';
+import Cnvs from './Cnvs';
 
-const rootReducer = combineReducers({Prss, Errs});
+const rootReducer = combineReducers({Prss, Errs, Cnvs});
 
 export default rootReducer;
