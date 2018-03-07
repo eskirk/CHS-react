@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Col, Row, Glyphicon, Button } from "react-bootstrap";
-// import { ConfDialog } from "../index";
+import { ConfDialog } from "../index";
 import "./Conversations.css";
 
 class ConversationOverview extends Component {
@@ -38,6 +38,10 @@ class ConversationOverview extends Component {
       return conversations;
    }
 
+   newConversation() {
+      this.setState({ createNewConversation: true });
+   }
+
    render() {
       return (
          <div className="container">
@@ -45,8 +49,27 @@ class ConversationOverview extends Component {
                [
                   <section className='container'>
                      <h1>Conversation Overview</h1>
-                     <hr/>
+                     <hr />
                      {this.displayConversations()}
+                     <hr />
+                     <Button bsStyle="primary" bsSize="large" onClick={() =>
+                        this.newConversation()}>
+                        New Conversation
+                     </Button>
+
+                     <ConfDialog
+                        show={this.state.createNewConversation}
+                        title={"Create a new conversation"}
+                        body={'Enter the title of the new conversation'}
+                        buttons={['SUBMIT', 'CANCEL']}
+                        form={this.state}
+                        onClose={answer => {
+                           this.setState({ createNewConversation: false });
+                           if (answer === 'SUBMIT') {
+
+                           }
+                        }}
+                     />
                   </section>
                ]
                :
@@ -65,24 +88,26 @@ class ConversationOverview extends Component {
 class Conversation extends Component {
    render() {
       return (
-         <Row className="conversationRow">
-            <Col sm={10}>
-               <h3>
-                  {this.props.title}
-               </h3>
-               <span>
-                  {Intl.DateTimeFormat("en-US").format(new Date(this.props.lastMessage))}
-               </span>
-            </Col>
-            <Col sm={2}>
-               <Button bsSize="xsmall" onClick={() => console.log('Edit')}>
-                  <Glyphicon glyph="glyphicon glyphicon-pencil" /> Edit
+         <div>
+            <Row className="conversationRow">
+               <Col sm={10}>
+                  <h3>
+                     {this.props.title}
+                  </h3>
+                  <span>
+                     {Intl.DateTimeFormat("en-US").format(new Date(this.props.lastMessage))}
+                  </span>
+               </Col>
+               <Col sm={2}>
+                  <Button bsSize="xsmall" bsStyle="info" onClick={() => console.log('Edit')}>
+                     <Glyphicon glyph="glyphicon glyphicon-pencil" /> Edit
                </Button>
-               <Button bsSize="xsmall" onClick={() => console.log('Delete')}>
-                  <Glyphicon glyph="glyphicon glyphicon-remove" /> Remove
+                  <Button bsSize="xsmall" bsStyle="info" onClick={() => console.log('Delete')}>
+                     <Glyphicon glyph="glyphicon glyphicon-remove" /> Remove
                </Button>
-            </Col>
-         </Row>
+               </Col>
+            </Row>
+         </div>
       )
    }
 }
