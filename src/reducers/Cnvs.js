@@ -1,11 +1,11 @@
-function Cnvs(state = {}, action) {
+export default function Cnvs(state = {}, action) {
    console.log("Cnvs reducing action " + action.type);
    switch(action.type) {
    case 'GET_CNVS':
-      return state.concat(action.cnvs);
+      console.log('CNVS');
+      console.log(action.cnvs);
+      return action.cnvs;
    default:
       return state;
    }
 }
-
-export default Cnvs;

@@ -5,11 +5,19 @@ export function signIn(credentials, cb) {
    console.log("signIn action creator");
    return (dispatch, prevState) => {
       api.signIn(credentials)
-         .then((userInfo) => dispatch({ user: userInfo, type: "SIGN_IN" }))
-         .then(() => {if (cb) cb();})
+         .then((userInfo) => dispatch({
+            user: userInfo,
+            type: "SIGN_IN"
+         }))
+         .then(() => {
+            if (cb) cb();
+         })
          .catch((error) => {
             console.log("Sign in error" + error);
-            dispatch({type: 'LOGIN_ERR', details: error});
+            dispatch({
+               type: 'LOGIN_ERR',
+               details: error
+            });
          });
       // setTimeout(() => dispatch({user: credentials, type: "SIGN_IN"}), 2000);
    };
@@ -19,11 +27,16 @@ export function register(data, cb) {
    console.log("register action creator");
    return (dispatch, prevState) => {
       api.register(data)
-      .then(() => {if (cb) cb();})
-      .catch(error => {
-         console.log("Registration error" + error);
-         dispatch({type: 'REGISTER_ERR', details: error});
-      });
+         .then(() => {
+            if (cb) cb();
+         })
+         .catch(error => {
+            console.log("Registration error" + error);
+            dispatch({
+               type: 'REGISTER_ERR',
+               details: error
+            });
+         });
    };
 }
 
@@ -31,11 +44,18 @@ export function register(data, cb) {
 export function signOut(cb) {
    return (dispatch, prevState) => {
       api.signOut()
-         .then(() => dispatch({ type: 'SIGN_OUT' }))
-         .then(() => {if (cb) cb();})
+         .then(() => dispatch({
+            type: 'SIGN_OUT'
+         }))
+         .then(() => {
+            if (cb) cb();
+         })
          .catch((err) => {
             console.log("Sign out error!");
-            dispatch({type: "ERROR", err});
+            dispatch({
+               type: "ERROR",
+               err
+            });
          });
    };
 }
@@ -43,7 +63,10 @@ export function signOut(cb) {
 // Error functions
 export function postError(type, details, cb) {
    return (dispatch, prevState) => {
-      dispatch({type, details});
+      dispatch({
+         type,
+         details
+      });
       if (cb)
          cb();
    };
@@ -51,7 +74,9 @@ export function postError(type, details, cb) {
 
 export function clearErrors(cb) {
    return (dispatch, prevState) => {
-      dispatch({type: "CLEAR_ERRS"});
+      dispatch({
+         type: "CLEAR_ERRS"
+      });
       if (cb)
          cb();
    };
@@ -62,11 +87,19 @@ export function getCnvs(cb) {
    console.log('getting conversations');
    return (dispatch, prevState) => {
       api.getCnvs()
-         .then(() => dispatch({type: "GET_CNVS"}))
-         .then(() => {if (cb) cb();})
+         .then((cnvs) => dispatch({
+            cnvs: cnvs,
+            type: "GET_CNVS"
+         }))
+         .then(() => {
+            if (cb) cb();
+         })
          .catch((err) => {
             console.log('Could not get conversations');
-            dispatch({type: "ERROR", err});
+            dispatch({
+               type: "ERROR",
+               err
+            });
          });
    }
 }
