@@ -122,6 +122,18 @@ export function getCnvs() {
    return get("Cnvs").then((res) => res.json())
 }
 
+export function getCnvsOwner(owner) {
+   return get(`Cnvs?owner=${owner}`).then((res) => res.json());
+}
+
+export function getMsgs(id) {
+   return get(`Cnvs/${id}/Msgs`).then((res) => res.json());
+}
+
+export function getCnv(id) {
+   return get(`Cnvs/${id}`).then((res) => res.json());
+}
+
 export function putCnv(id, body) {
    return put(`Cnvs/${id}`, body)
 }
@@ -132,6 +144,10 @@ export function delCnv(id) {
 
 export function postCnv(body) {
    return post('Cnvs', body)
+}
+
+export function postMsg(cnvId, body) {
+   return post(`Cnvs/${cnvId}/Msgs`, body);
 }
 
 const errMap = {

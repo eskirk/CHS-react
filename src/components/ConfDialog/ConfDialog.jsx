@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Modal, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Modal, Button, FormGroup, FormControl } from 'react-bootstrap';
 
 /**
  * Properties expected:
@@ -18,10 +18,9 @@ export default class ConfDialog extends PureComponent {
             <br />
             <FormGroup 
                controlId='newConversation'
-               validationState={state.validator}
                >
                <FormControl 
-                  value={state.value}
+                  inputRef={(value) => {state.input = value}}
                />
             </FormGroup>
          </div>

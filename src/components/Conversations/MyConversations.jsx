@@ -1,31 +1,19 @@
 import React, { Component } from 'react';
-import { Col, Row, Glyphicon, Button } from 'react-bootstrap';
-import { ConfDialog } from '../index';
-import { ConversationRow } from '../index';
+import { Button } from 'react-bootstrap';
+import { ConversationRow, ConfDialog, ConversationOverview } from '../index';
 import './Conversations.css';
 
-class ConversationOverview extends Component {
+class MyConversations extends ConversationOverview {
    constructor(props) {
       super(props);
       this.state = {
          cnvs: []
-      };
+      }
 
-      this.handleChange = this.handleChange.bind(this);
-      this.displayConversations = this.displayConversations.bind(this);
-
-      this.props.getCnvs();
+      this.props.getCnvsOwner(this.props.Prss.id);
    }
 
-   handleChange(ev) {
-      let newState = {};
-      console.log('changing state');
-
-      return newState;
-   }
-
-   // render a conversation component for each conversation in the DB
-   displayConversations() {
+   showMyConversations() {
       var conversations = [];
 
       this.props.Cnvs.forEach(element => {
@@ -40,14 +28,7 @@ class ConversationOverview extends Component {
             />
          )
       });
-
-      console.log(conversations);
       return conversations;
-   }
-
-   // displays the message creation dialog 
-   newConversation() {
-      this.setState({ createNewConversation: true });
    }
 
    // actually creates the new conversation
@@ -59,59 +40,20 @@ class ConversationOverview extends Component {
       this.props.getCnvs();
    }
 
-   // displays the confirmaton dialog to delete a conversation
-   deleteCnvConfirmation(cnvId) {
-      this.setState({ deleteConversation: true });
-      this.setState({ curCnvId: cnvId });
-   }
-
-   // actually deletes the conversation
-   deleteConversation(cnvId) {
-      this.props.delCnv(this.state.curCnvId);
-      this.props.getCnvs();
-   }
-
-   // called form the conversation edit button, saves the cnvId to be used
-   // with updateConversation()
-   changeConversation(cnvId) {
-      this.setState({ editConversation: true });
-      this.setState({ curCnvId: cnvId });
-   }
-
-   // actually updates the conversation title
-   updateConversation(title) {
-      var body = {
-         title: title
-      }
-
-      this.props.putCnv(this.state.curCnvId, body);
-      setTimeout(() => {
-         this.props.getCnvs();
-      }, 500);
-   }
-
-   conversationDetails(cnvId, cnvTitle) {
-      this.props.history.push('/CnvDetail/' + cnvId);
-      this.setState({ 
-         curCnvId: cnvId
-      });
-      console.log(cnvId);
-   }
-
    render() {
       return (
-         <div className='container'>
+         <div className='container' >
             {this.props.Cnvs.length ?
                [
-                  <section className='container'>
-                     <h1>Conversation Overview</h1>
+                  <div className='container'>
+                     <h1>My Conversations</h1>
                      <hr />
-                     {this.displayConversations()}
+                     {this.showMyConversations()}
                      <hr />
-                  </section>
+                  </div>
                ]
                :
-               <h4>Fetching conversations...</h4>
+               <h4>You have no conversations, make one!</h4>
             }
             <br />
             <Button bsStyle='primary' bsSize='large' onClick={() =>
@@ -171,8 +113,8 @@ class ConversationOverview extends Component {
                ''
             }
          </div>
-      )
+      );
    }
 }
 
-export default ConversationOverview;
+export default MyConversations;

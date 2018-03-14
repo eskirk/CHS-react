@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Register, SignIn, ConfDialog, ConversationOverview } from '../index'
+import { Register, SignIn, ConfDialog, ConversationOverview, MyConversations, Conversation } from '../index'
 import { Route, Switch } from 'react-router-dom';
 import { Col, Navbar, Nav, NavItem, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -32,7 +32,7 @@ class Main extends Component {
                               <LinkContainer key={0} to="/cnvs">
                                  <NavItem>All Conversations</NavItem>
                               </LinkContainer>,
-                              <LinkContainer key={1} to="/msgs">
+                              <LinkContainer key={1} to="/myCnvs">
                                  <NavItem>My Conversations</NavItem>
                               </LinkContainer>
                            ]
@@ -70,6 +70,10 @@ class Main extends Component {
                <Route path='/register'
                   render={() => <Register {...this.props} />} />
                <Route path='/cnvs' render={() => <ConversationOverview
+                  {...this.props} />} />
+               <Route path='/CnvDetail/:id' render={() => <Conversation 
+                  {...this.props} />} />
+               <Route path='/myCnvs' render={() => <MyConversations 
                   {...this.props} />} />
             </Switch>
 

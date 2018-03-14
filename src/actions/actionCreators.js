@@ -82,6 +82,28 @@ export function clearErrors(cb) {
    };
 }
 
+// Msgs functions
+export function getMsgs(cnvId, cb) {
+   console.log('getting messages');
+   return (dispatch, prevState) => {
+      api.getMsgs(cnvId)
+         .then((msgs) => dispatch({
+            msgs: msgs,
+            type: "GET_MSGS"
+         }))
+         .then(() => {
+            if (cb) cb();
+         })
+         .catch((err) => {
+            console.log('could not get messages');
+            dispatch({
+               type: "ERROR",
+               err
+            })
+         })
+   }
+}
+
 // Cnvs functions
 export function getCnvs(cb) {
    console.log('getting conversations');
@@ -101,5 +123,104 @@ export function getCnvs(cb) {
                err
             });
          });
+   }
+}
+
+export function getCnvsOwner(owner, cb) {
+   console.log('getting cnvs with owner ' + owner);
+   return (dispatch, prevState) => {
+      api.getCnvsOwner(owner)
+         .then((cnvs) => dispatch({
+            cnvs: cnvs,
+            type: "GET_CNVS"
+         }))
+         .then(() => {
+            if (cb) cb();
+         })
+         .catch((err) => {
+            console.log('Could not get conversations');
+            dispatch({
+               type: "ERROR",
+               err
+            });
+         });
+   }
+}
+
+export function postCnv(body, cb) {
+   return (dispatch, prevState) => {
+      api.postCnv(body)
+         .then((res) => dispatch({
+            type: "POST_CNVS"
+         }))
+         .then(() => {
+            if (cb) cb()
+         })
+         .catch((err) => {
+            console.log('Could not post conversation');
+            console.log(err);
+            dispatch({
+               type: "ERROR",
+               err
+            })
+         });
+   }
+}
+
+export function postMsg(cnvId, body, cb) {
+   return (dispatch, prevState) => {
+      api.postMsg(cnvId, body)
+         .then((res) => dispatch({
+            type: "POST_MSG"
+         }))
+         .then(() => {
+            if (cb) cb()
+         })
+         .catch((err) => {
+            console.log('Could not post message');
+            console.log(err);
+            dispatch({
+               type: "ERROR",
+               err
+            })
+         })
+   }
+}
+
+export function delCnv(cnvId, cb) {
+   console.log('deleting conversation ' + cnvId);
+   return (dispatch, prevState) => {
+      api.delCnv(cnvId)
+         .then((res) => console.log(res));
+   }
+}
+
+export function putCnv(cnvId, body, cb) {
+   console.log('updating conversation ' + cnvId + ' ' + body);
+   return (dispatch, prevState) => {
+      api.putCnv(cnvId, body)
+         .then((res) => console.log(res));
+   }
+}
+
+export function getCnv(cnvId, cb) {
+   console.log('getting conversation ' + cnvId);
+   return (dispatch, prevState) => {
+      api.getCnv(cnvId)
+         .then((cnv) => dispatch({
+            cnv: cnv,
+            type: "GET_CNV"
+         }))
+         .then(() => {
+            if (cb) cb();
+         })
+         .catch((err) => {
+            console.log('could not get conversation');
+            console.log(err);
+            dispatch({
+               type: 'ERROR',
+               err
+            })
+         })
    }
 }
