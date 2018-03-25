@@ -8,6 +8,10 @@ export default function Cnvs(state = {}, action) {
       console.log('GET CNV');
       console.log(action.cnv);
       return action.cnv;
+   case 'DEL_CNV':
+      console.log('DEL CNV');
+      console.log(action.cnv);
+      return state;
    case 'GET_MSGS':
       console.log('GET MSGS');
       console.log(action.msgs);
@@ -17,6 +21,9 @@ export default function Cnvs(state = {}, action) {
       return action.prevState;
    case 'POST_MSG':
       console.log('POST MSG');
+      return action.prevState;
+   case 'PUT_MSG':
+      console.log('PUT MSG');
       return action.prevState;
    case 'PUT_CNVS':
       console.log('PUT CNVS');

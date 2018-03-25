@@ -19,7 +19,6 @@ export function signIn(credentials, cb) {
                details: error
             });
          });
-      // setTimeout(() => dispatch({user: credentials, type: "SIGN_IN"}), 2000);
    };
 }
 
@@ -160,8 +159,8 @@ export function postCnv(body, cb) {
             console.log('Could not post conversation');
             console.log(err);
             dispatch({
-               type: "ERROR",
-               err
+               type: "LONG_TITLE",
+               details: err
             })
          });
    }
@@ -181,7 +180,7 @@ export function postMsg(cnvId, body, cb) {
             console.log(err);
             dispatch({
                type: "ERROR",
-               err
+               details: err
             })
          })
    }
@@ -199,7 +198,17 @@ export function putCnv(cnvId, body, cb) {
    console.log('updating conversation ' + cnvId + ' ' + body);
    return (dispatch, prevState) => {
       api.putCnv(cnvId, body)
-         .then((res) => console.log(res));
+         .then(() => {
+            if (cb) cb()
+         })
+         .catch((err) => {
+            console.log('Could not put message');
+            console.log(err);
+            dispatch({
+               type: 'DUP_TITLE',
+               details: err
+            })
+         })
    }
 }
 
@@ -219,7 +228,7 @@ export function getCnv(cnvId, cb) {
             console.log(err);
             dispatch({
                type: 'ERROR',
-               err
+               details: err
             })
          })
    }

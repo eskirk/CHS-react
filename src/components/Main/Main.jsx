@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Register, SignIn, ConfDialog, ConversationOverview, MyConversations, Conversation } from '../index'
+import { Register, SignIn, ConfDialog, ConversationOverview, MyConversations, 
+ Conversation } from '../index'
 import { Route, Switch } from 'react-router-dom';
-import { Col, Navbar, Nav, NavItem, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, ListGroup, ListGroupItem } from
+ 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import './Main.css';
 
@@ -53,7 +55,9 @@ class Main extends Component {
                         <Nav pullRight>
                            <LinkContainer key={2} to="/">
                               <NavItem eventKey={1}
-                                 onClick={() => this.props.signOut()}>Sign out</NavItem>
+                               onClick={() => this.props.signOut()}>
+                                 Sign out
+                              </NavItem>
                            </LinkContainer>
                         </Nav>
                         :
@@ -65,8 +69,12 @@ class Main extends Component {
 
             {/*Alternate pages beneath navbar, based on current route*/}
             <Switch>
-               <Route exact path='/' render={() => <Home />} />
-               <Route path='/signin' render={() => <SignIn {...this.props} />} />
+               <Route exact path='/' render={() => 
+                  this.signedIn() ? <ConversationOverview {...this.props} /> 
+               :
+                  <SignIn {...this.props} />} 
+               />
+               <Route path='/signin' render={() => <SignIn {...this.props} />}/>
                <Route path='/register'
                   render={() => <Register {...this.props} />} />
                <Route path='/cnvs' render={() => <ConversationOverview
@@ -91,21 +99,6 @@ class Main extends Component {
                buttons={['OK']}
                onClose={() => { this.props.clearErrors() }}
             />
-         </div>
-      )
-   }
-}
-
-// Home page component
-class Home extends Component {
-   render() {
-      return (
-         <div className="container">
-            <Col sm={10}>
-               <h1>
-                  Home
-               </h1>
-            </Col>
          </div>
       )
    }

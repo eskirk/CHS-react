@@ -11,38 +11,64 @@ class Conversation extends Component {
       super(props);
 
       this.state = {
-         msgs: []
+         msgs: [],
+         showMessage: true
       }
       // get the cnvId from the path.... this works well I think
       this.cnvId = this.props.location.pathname.split('/')[2];
       this.props.getCnv(this.cnvId);
 
       setTimeout(() => {
-         this.state.title = this.props.Cnvs.title;
+         this.setState({
+            title: this.props.Cnvs.title
+         });
          this.props.getMsgs(this.cnvId);
       }, 500);
       this.showMessages();
+   }
+
+   handleChange(event) {
+      const newState = {}
+      newState[event.target.name] = event.target.value;
+      this.setState(newState);
+   }
+
+   toggleMessage() {
+      this.setState({
+         showMessage: !this.state.showMessage
+      });
    }
 
    showMessages() {
       var messages = [];
 
       this.props.Cnvs.forEach((message) => {
-         console.log(message);
          messages.push(
-            <div>
-               <Row>
-                  <span>
-                     {message.email || this.state.title ?
-                        [<div>
-                           <b>{message.email}</b>: {message.content}
-                        </div>]
-                        :
-                        ""
-                     }
-                  </span>
-               </Row>
-            </div>
+            <Row key={message.id}>
+               <span>
+                  {message.email || this.state.title ?
+                     [
+                        <div key={message.id}>
+                           <Row className='messageTitle'
+                            onClick={() => this.toggleMessage()}>
+                              {Intl.DateTimeFormat('en-US').format(
+                                 new Date(message.whenMade))}: 
+                                  <b>{message.email}</b>
+                           </Row>
+                           <Row className=
+                            {this.state.showMessage ? '' : 'hidden'} >
+                              <span>
+                                 {message.content}
+                              </span>
+                           </Row>
+                        </div>
+                     ]
+                     :
+                     ""
+                  }
+               </span>
+               <hr />
+            </Row>
          )
       })
 
@@ -72,22 +98,21 @@ class Conversation extends Component {
             <div>
                {this.props.Cnvs.length ?
                   [
-                     <div>
+                     <div key={0}>
                         {this.showMessages()}
                      </div>
                   ]
                   :
-                  this.state.title.length ?
-                     'Fetching messages...'
-                     :
+                  [
                      'No messages in this conversation'
+                  ]
                }
             </div>
             <hr />
             <div>
                <Row>
                   <FormGroup controlId='newMessage'>
-                     <FormControl inputRef={(value) => { this.input = value }} />
+                     <FormControl inputRef={(value) => { this.input = value }}/>
                   </FormGroup>
                </Row>
                <Row>

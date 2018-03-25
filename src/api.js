@@ -9,7 +9,18 @@ const reqConf = {
    credentials: 'include',
 };
 
-// Helper functions for the comon request types
+/**
+ * wrapper function for fetch that handles server errors and creates 
+ * an error promise on 40x errors
+ * @param {string} request 
+ * @param {Object} options 
+ */
+let newFetch = function(request, options) {
+   return fetch(request, options)
+      .then(res => res.ok ? res : createErrorPromise(res));
+}
+
+// Helper functions for the common request types
 
 /**
  * make a post request
@@ -19,7 +30,7 @@ const reqConf = {
  */
 export function post(endpoint, body) {
    console.log("BASE URL: " + baseURL + endpoint);
-   return fetch(baseURL + endpoint, {
+   return newFetch(baseURL + endpoint, {
       method: 'POST',
       body: JSON.stringify(body),
       ...reqConf
@@ -33,7 +44,7 @@ export function post(endpoint, body) {
  * @returns {Promise}
  */
 export function put(endpoint, body) {
-   return fetch(baseURL + endpoint, {
+   return newFetch(baseURL + endpoint, {
       method: 'PUT',
       body: JSON.stringify(body),
       ...reqConf
@@ -46,14 +57,14 @@ export function put(endpoint, body) {
  * @returns {Promise}
  */
 export function get(endpoint) {
-   return fetch(baseURL + endpoint, {
+   return newFetch(baseURL + endpoint, {
       method: 'GET',
       ...reqConf
    })
 }
 
 export function del(endpoint) {
-   return fetch(baseURL + endpoint, {
+   return newFetch(baseURL + endpoint, {
       method: 'DELETE',
       ...reqConf
    })
@@ -87,7 +98,7 @@ export function signIn(cred) {
 // Handle response with non-200 status by returning a Promise that rejects,
 // with reason: array of one or more error strings suitable for display.
 function createErrorPromise(response) {
-   if (response.status === 400)
+   if (response.status >= 400)
       return Promise.resolve(response)
          .then(response => response.json())
          .then(errorList => Promise.reject(errorList.map(

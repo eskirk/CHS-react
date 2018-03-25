@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button } from 'react-bootstrap';
 import { ConversationRow, ConfDialog, ConversationOverview } from '../index';
 import './Conversations.css';
@@ -17,6 +17,7 @@ class MyConversations extends ConversationOverview {
       var conversations = [];
 
       this.props.Cnvs.forEach(element => {
+         console.log(this.props.Prss);
          conversations.push(
             <ConversationRow
                key={element.id}
@@ -24,7 +25,8 @@ class MyConversations extends ConversationOverview {
                lastMessage={element.lastMessage}
                cnvId={element.id}
                cnvOvw={this}
-            // owner={this.Prss.id === element.ownerId}
+               owner={this.props.Prss.id === element.ownerId}
+               admin={this.props.Prss.role}
             />
          )
       });
@@ -40,12 +42,24 @@ class MyConversations extends ConversationOverview {
       this.props.getCnvs();
    }
 
+   // actually updates the conversation title
+   updateConversation(title) {
+      var body = {
+         title: title
+      }
+
+      this.props.putCnv(this.state.curCnvId, body);
+      setTimeout(() => {
+         this.props.getCnvsOwner(this.props.Prss.id);
+      }, 500);
+   }
+
    render() {
       return (
          <div className='container' >
             {this.props.Cnvs.length ?
                [
-                  <div className='container'>
+                  <div className='container' key={0}>
                      <h1>My Conversations</h1>
                      <hr />
                      {this.showMyConversations()}

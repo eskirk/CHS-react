@@ -102,7 +102,8 @@ class Register extends Component {
                   onChange={this.handleChange} required={true}
                />
 
-               <FieldGroup id="passwordTwo" type="password" label="Repeat Password"
+               <FieldGroup id="passwordTwo" type="password" label="Repeat 
+                Password"
                   value={this.state.passwordTwo}
                   onChange={this.handleChange} required={true}
                   help="Repeat your password"
@@ -133,7 +134,8 @@ class Register extends Component {
                   this.setState({ offerSignIn: false });
                   if (answer === 'YES') {
                      this.props.signIn(
-                        { email: this.state.email, password: this.state.password },
+                        { email: this.state.email, password: 
+                         this.state.password },
                         () => this.props.history.push("/"));
                   }
                }}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row, Glyphicon, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { ConfDialog } from '../index';
 import { ConversationRow } from '../index';
 import './Conversations.css';
@@ -36,12 +36,12 @@ class ConversationOverview extends Component {
                lastMessage={element.lastMessage}
                cnvId={element.id}
                cnvOvw={this}
-            // owner={this.Prss.id === element.ownerId}
+               owner={this.props.Prss.id === element.ownerId}
+               admin={this.props.Prss.role}
             />
          )
       });
 
-      console.log(conversations);
       return conversations;
    }
 
@@ -55,6 +55,7 @@ class ConversationOverview extends Component {
       var body = {
          title: title
       }
+
       this.props.postCnv(body);
       this.props.getCnvs();
    }
@@ -95,7 +96,6 @@ class ConversationOverview extends Component {
       this.setState({ 
          curCnvId: cnvId
       });
-      console.log(cnvId);
    }
 
    render() {
@@ -103,7 +103,7 @@ class ConversationOverview extends Component {
          <div className='container'>
             {this.props.Cnvs.length ?
                [
-                  <section className='container'>
+                  <section className='container' key={0}>
                      <h1>Conversation Overview</h1>
                      <hr />
                      {this.displayConversations()}
@@ -111,7 +111,7 @@ class ConversationOverview extends Component {
                   </section>
                ]
                :
-               <h4>Fetching conversations...</h4>
+               <h4>You have no conversations, make one!</h4>
             }
             <br />
             <Button bsStyle='primary' bsSize='large' onClick={() =>
@@ -163,7 +163,7 @@ class ConversationOverview extends Component {
                   buttons={['DELETE', 'CANCEL']}
                   onClose={answer => {
                      if (answer === 'DELETE')
-                        this.deleteConversation(this.state.input.value);
+                        this.deleteConversation(this.state.curCnvId);
                      this.setState({ deleteConversation: false });
                   }}
                />

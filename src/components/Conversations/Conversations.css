@@ -6,3 +6,11 @@
 .cnvTitle {
    cursor: pointer;
 }
+
+.messageTitle {
+   cursor: pointer;
+}
+
+.hidden {
+   display: none;
+}
