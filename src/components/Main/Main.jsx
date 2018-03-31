@@ -36,6 +36,9 @@ class Main extends Component {
                               </LinkContainer>,
                               <LinkContainer key={1} to="/myCnvs">
                                  <NavItem>My Conversations</NavItem>
+                              </LinkContainer>,
+                              <LinkContainer key={2} to="/register">
+                                 <NavItem>Register</NavItem>
                               </LinkContainer>
                            ]
                            :
@@ -44,9 +47,7 @@ class Main extends Component {
                                  <NavItem>Sign In</NavItem>
                               </LinkContainer>,
                               <LinkContainer key={1} to="/register">
-                                 <NavItem>
-                                    Register
-                               </NavItem>
+                                 <NavItem>Register</NavItem>
                               </LinkContainer>,
                            ]
                         }

@@ -53,6 +53,7 @@ class Register extends Component {
       };
 
       this.props.register(user, () => {
+         console.log(user);
          console.log("offer");
          this.setState({ offerSignIn: true })
       });
@@ -112,7 +113,17 @@ class Register extends Component {
                <Checkbox id="termsAccepted" value={this.state.termsAccepted}
                   onChange={this.handleChange}>
                   Do you accept the terms and conditions?
-              </Checkbox>
+               </Checkbox>
+
+              {this.props.Prss.role ?
+                  <Checkbox id="role" value={this.state.role ? 0 : 1}
+                     onChange={this.handleChange}>
+                     Is this user an admin?
+                  </Checkbox>
+               :
+                  ''
+              }
+
             </form>
 
             {this.state.password !== this.state.passwordTwo ?
