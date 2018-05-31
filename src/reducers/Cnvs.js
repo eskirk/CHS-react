@@ -11,7 +11,7 @@ export default function Cnvs(state = {}, action) {
    case 'DEL_CNV':
       console.log('DEL CNV');
       console.log(action.cnv);
-      return state;
+      return action.cnvs.filter(element => element !== action.cnv);
    case 'GET_MSGS':
       console.log('GET MSGS');
       console.log(action.msgs);

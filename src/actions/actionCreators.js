@@ -158,10 +158,11 @@ export function postCnv(body, cb) {
          .catch((err) => {
             console.log('Could not post conversation');
             console.log(err);
-            dispatch({
-               type: "LONG_TITLE",
-               details: err
-            })
+            if (body.length > 80) 
+               dispatch({
+                  type: "LONG_TITLE",
+                  details: err
+               })
          });
    }
 }
